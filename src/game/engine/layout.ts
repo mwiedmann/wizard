@@ -58,9 +58,10 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
 
     // Create a collider for the area that take the player to the linked room
     // TODO: How do we clean this up? Does it get removed when the gateObject/collision area is deleted?
-    gameObjects.guy.setOnCollideWith(gateObject, () => {
+    gateObject.setOnCollideWith(gameObjects.guy.body as MatterJS.BodyType, () => {
       gameState.phase = gate.toRoom
       gameState.dropArea = gate.dropArea
+      gameObjects.guy.setVelocity(0, 0)
       console.log('hit gate', gate.toRoom, gate.dropArea)
     })
 

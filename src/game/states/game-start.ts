@@ -30,7 +30,7 @@ const gameStartInit = (scene: Phaser.Scene): void => {
   // The normal here tells us if he has collided with something "down"
   // Eventually we will check the type of object (unless we want him to be able to jump off of anything)
   gameObjects.guy.setOnCollideActive((pair: Phaser.Types.Physics.Matter.MatterCollisionPair) => {
-    if (pair.collision.normal.y === -1) {
+    if (pair.collision.normal.y === -1 && pair.collision.normal.x === 0) {
       gameObjects.guy.touchingFloor = true
     }
   })

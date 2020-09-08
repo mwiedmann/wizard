@@ -1,6 +1,7 @@
 import { gameObjects } from '../game-objects'
 import { controls } from '../init'
 import { EnergyBolt } from '../objects/energy-bolt'
+import { MonsterBase } from '../objects/monster-base'
 import { currentObjects } from './current-objects'
 
 const sideVelocityLimit = 4
@@ -13,8 +14,9 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
 
   let running = false
 
-  if (guy.touchingFloor && controls.cursors.up?.isDown) {
+  if (guy.touchingFloor && controls.cursors.up?.isDown && guy.lastJumpTime + 700 < time) {
     guy.applyForce(new Phaser.Math.Vector2(0, -3.7))
+    guy.lastJumpTime = time
   }
 
   if (controls.cursors.left?.isDown) {
@@ -32,7 +34,14 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   if (controls.spell.isDown && time > playerNextSpellTime) {
     const spell = new EnergyBolt(scene.matter.world, guy.x, guy.y, time, 'energy-bolt', 0)
     spell.fire(guy.flipX ? -1 : 1, 1000)
-
+    spell.setOnCollide((pair: Phaser.Types.Physics.Matter.MatterCollisionPair) => {
+      spell.lifespan = 0
+      // See if this is a monster and damage it if so
+      const bodyHit = pair.bodyA.gameObject as MonsterBase
+      if (bodyHit?.monsterType) {
+        bodyHit.done()
+      }
+    })
     gameObjects.spells.push(spell)
     playerNextSpellTime = time + 1000
   }
@@ -45,6 +54,9 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
     guy.anims.play('guy-run', true)
   } else {
     guy.anims.stop()
+    if (guy.touchingFloor) {
+      guy.setVelocity(0, 0)
+    }
   }
 
   // This will be reset by the collider every loop so we always
@@ -59,6 +71,12 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
     gameObjects.spells = gameObjects.spells.filter((spell) => !spell.remove)
   }
 
+  // Clean up any dead monsters
+  if (currentObjects.monsters.some((monster) => monster.remove)) {
+    currentObjects.monsters = currentObjects.monsters.filter((monster) => !monster.remove)
+  }
+
+  // Update any remaining monsters
   currentObjects.monsters.forEach((monster) => {
     monster.setVelocityX(monster.x < guy.x ? 1 : -1)
     monster.flipX = monster.x < guy.x
