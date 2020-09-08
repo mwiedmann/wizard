@@ -1,0 +1,11 @@
+{
+  "backgrounds": [{ "key": "background" }],
+  "floors": [
+    { "key": "floor-1", "x": 872, "y": 372, "repeat": 4 },
+    { "key": "floor-1", "x": 1000, "y": 500, "repeat": 4 }
+  ],
+  "gates": [
+    { "key": "portal", "x": 600, "y": 250, "width": 64, "height": 128, "toRoom": "gameA2", "dropArea": "main" }
+  ],
+  "dropAreas": [{ "key": "main", "x": 1200, "y": 200 }]
+}
