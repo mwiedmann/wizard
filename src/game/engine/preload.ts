@@ -1,5 +1,3 @@
-import { gameObjects } from '../game-objects'
-import { gameState } from '../scene-update'
 import { ILayout, layout } from './layout'
 
 export const preloadComplete: Record<string, boolean> = {}
@@ -26,15 +24,6 @@ export const preloadRoom = (
   // When they are all done, mark the level as loaded and call init
   const jsonLoaded = () => {
     const roomConfig: ILayout = scene.game.cache.json.get(roomKey)
-
-    // Move the guy to the dropArea
-    if (roomConfig.dropAreas) {
-      const guyLocation = roomConfig.dropAreas.find((d) => d.key === gameState.dropArea)
-      if (!guyLocation) {
-        throw new Error(`Could not find dropArea: ${gameState.dropArea}`)
-      }
-      gameObjects.guy.setPosition(guyLocation.x, guyLocation.y)
-    }
 
     // If we have already loaded everything on a previous visit, OR
     // If no images are defined for this room, then

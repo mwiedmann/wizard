@@ -1,11 +1,5 @@
 {
-  "backgrounds": [{ "key": "background" }],
-  "floors": [
-    { "key": "floor-1", "x": 672, "y": 472, "repeat": 4 },
-    { "key": "floor-1", "x": 1200, "y": 600, "repeat": 4 }
-  ],
-  "gates": [
-    { "key": "portal", "x": 1400, "y": 500, "width": 64, "height": 128, "toRoom": "gameA1", "dropArea": "main" }
-  ],
-  "dropAreas": [{ "key": "main", "x": 600, "y": 300 }]
+  "size": { "width": 500, "height": 500 },
+  "backgrounds": [{ "key": "small-wall" }],
+  "dropAreas": [{ "key": "main", "x": 250, "y": 100 }]
 }
