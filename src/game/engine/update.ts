@@ -1,6 +1,7 @@
 import { gameObjects } from '../game-objects'
 import { controls } from '../init'
 import { EnergyBolt } from '../objects/energy-bolt'
+import { currentObjects } from './current-objects'
 
 const sideVelocityLimit = 4
 
@@ -41,7 +42,7 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   }
 
   if (running) {
-    guy.anims.play('run', true)
+    guy.anims.play('guy-run', true)
   } else {
     guy.anims.stop()
   }
@@ -57,6 +58,11 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   if (gameObjects.spells.some((spell) => spell.remove)) {
     gameObjects.spells = gameObjects.spells.filter((spell) => !spell.remove)
   }
+
+  currentObjects.monsters.forEach((monster) => {
+    monster.setVelocityX(monster.x < guy.x ? 1 : -1)
+    monster.flipX = monster.x < guy.x
+  })
 }
 
 /*

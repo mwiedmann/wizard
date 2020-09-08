@@ -7,5 +7,6 @@
   "gates": [
     { "key": "portal", "x": 600, "y": 250, "width": 64, "height": 128, "toRoom": "gameA2", "dropArea": "main" }
   ],
-  "dropAreas": [{ "key": "main", "x": 1200, "y": 200 }]
+  "dropAreas": [{ "key": "main", "x": 1200, "y": 200 }],
+  "monsters": [{ "type": "zombie", "x": 900, "y": 250 }]
 }

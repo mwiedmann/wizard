@@ -1,3 +1,5 @@
+import { collisionCategories, collisionMasks } from '../engine/collisions'
+
 export class EnergyBolt extends Phaser.Physics.Matter.Sprite {
   constructor(
     world: Phaser.Physics.Matter.World,
@@ -13,7 +15,10 @@ export class EnergyBolt extends Phaser.Physics.Matter.Sprite {
       frictionAir: 0,
       density: 0.01,
       ignoreGravity: true,
-      collisionFilter: { category: 4, mask: 1 },
+      collisionFilter: {
+        category: collisionCategories.guySpell,
+        mask: collisionMasks.guySpell,
+      },
     })
 
     this.particleManager = this.scene.add.particles('energy-bolt')

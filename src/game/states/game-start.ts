@@ -12,11 +12,19 @@ export const gameStartPreload = (scene: Phaser.Scene, roomKey: string): void => 
 const gameStartInit = (scene: Phaser.Scene): void => {
   gameObjects.guy = new Guy(scene.matter.world, 1000, 0, 'guy', 0)
   scene.anims.create({
-    key: 'run',
+    key: 'guy-run',
     frames: scene.anims.generateFrameNumbers('guy', { start: 0, end: 2 }),
     frameRate: 10,
     repeat: -1,
     yoyo: true,
+  })
+
+  // Monter animationa
+  scene.anims.create({
+    key: 'zombie-walk',
+    frames: scene.anims.generateFrameNumbers('zombie', { start: 0, end: 4 }),
+    frameRate: 7,
+    repeat: -1,
   })
 
   // The normal here tells us if he has collided with something "down"

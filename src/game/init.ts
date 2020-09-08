@@ -14,6 +14,7 @@ function scenePreload(this: Phaser.Scene) {
 
   // Sprites
   this.load.spritesheet('guy', 'images/wizard.png', { frameWidth: 64 })
+  this.load.spritesheet('zombie', 'images/monsters/zombie-64x64x9.png', { frameWidth: 64 })
   this.load.spritesheet('energy-bolt', 'images/spells/energy-bolt.png', { frameWidth: 16 })
 }
 

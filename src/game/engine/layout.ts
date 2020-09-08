@@ -1,6 +1,8 @@
 import { settingsHelpers } from '../consts'
 import { gameObjects } from '../game-objects'
+import { Zombie } from '../objects/zombie'
 import { gameState } from '../scene-update'
+import { collisionCategories, collisionMasks } from './collisions'
 import { currentObjects } from './current-objects'
 
 export interface ILayout {
@@ -9,6 +11,7 @@ export interface ILayout {
   floors?: { key: string; x: number; y: number; repeat: number }[]
   gates?: { key?: string; x: number; y: number; width: number; height: number; toRoom: string; dropArea: string }[]
   dropAreas?: [{ key: string; x: number; y: number }]
+  monsters?: [{ type: string; x: number; y: number }]
 }
 
 export const layout = (scene: Phaser.Scene, roomKey: string): void => {
@@ -33,7 +36,12 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
 
     for (let i = 0; i < f.repeat; i++) {
       currentObjects.images.push(scene.add.image(f.x + i * width, f.y, floorKey))
-      currentObjects.blocks.push(scene.matter.add.rectangle(f.x + i * width, f.y, width, height, { isStatic: true }))
+      currentObjects.blocks.push(
+        scene.matter.add.rectangle(f.x + i * width, f.y, width, height, {
+          isStatic: true,
+          collisionFilter: { category: collisionCategories.static, mask: collisionMasks.static },
+        })
+      )
     }
   })
 
@@ -57,6 +65,14 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
     })
 
     currentObjects.blocks.push(gateObject)
+  })
+
+  layout.monsters?.forEach((monster) => {
+    const zombie = new Zombie(scene.matter.world, monster.x, monster.y, 'zombie', 0)
+    zombie.anims.play('zombie-walk', true)
+    scene.add.existing(zombie)
+    scene.matter.body.setInertia(zombie.body as MatterJS.BodyType, Infinity)
+    currentObjects.monsters.push(zombie)
   })
 
   gameObjects.guy.setDepth(1)
