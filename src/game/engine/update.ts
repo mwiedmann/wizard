@@ -1,7 +1,10 @@
 import { gameObjects } from '../game-objects'
 import { controls } from '../init'
+import { EnergyBolt } from '../objects/energy-bolt'
 
 const sideVelocityLimit = 4
+
+let playerNextSpellTime = 0
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const update = (scene: Phaser.Scene, time: number, delta: number): void => {
@@ -25,6 +28,14 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
     guy.flipX = false
   }
 
+  if (controls.spell.isDown && time > playerNextSpellTime) {
+    const spell = new EnergyBolt(scene.matter.world, guy.x, guy.y, time, 'energy-bolt', 0)
+    spell.fire(guy.flipX ? -1 : 1, 1000)
+
+    gameObjects.spells.push(spell)
+    playerNextSpellTime = time + 1000
+  }
+
   if (Math.abs(guy.body.velocity.x) > sideVelocityLimit) {
     guy.setVelocity(guy.body.velocity.x > 0 ? sideVelocityLimit : -sideVelocityLimit, guy.body.velocity.y)
   }
@@ -38,6 +49,14 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   // This will be reset by the collider every loop so we always
   // want to set this to false to see if the guy is still touching the floor
   guy.touchingFloor = false
+
+  // Update all active spells and check if any of them have expired
+  gameObjects.spells.forEach((spell) => {
+    spell.update(time, delta)
+  })
+  if (gameObjects.spells.some((spell) => spell.remove)) {
+    gameObjects.spells = gameObjects.spells.filter((spell) => !spell.remove)
+  }
 }
 
 /*

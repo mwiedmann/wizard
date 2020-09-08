@@ -10,16 +10,13 @@ export const gameStartPreload = (scene: Phaser.Scene, roomKey: string): void => 
 }
 
 const gameStartInit = (scene: Phaser.Scene): void => {
-  gameObjects.guy = new Guy(scene.matter.world, 1000, 0, 'guy', 0, {
-    friction: 1,
-    frictionStatic: 5,
-    density: 0.025,
-  })
+  gameObjects.guy = new Guy(scene.matter.world, 1000, 0, 'guy', 0)
   scene.anims.create({
     key: 'run',
-    frames: scene.anims.generateFrameNumbers('guy', { start: 0, end: 3 }),
+    frames: scene.anims.generateFrameNumbers('guy', { start: 0, end: 2 }),
     frameRate: 10,
     repeat: -1,
+    yoyo: true,
   })
 
   // The normal here tells us if he has collided with something "down"

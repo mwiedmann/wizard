@@ -5,6 +5,7 @@ import { sceneUpdate } from './scene-update'
 export let controls: {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys
   next: Phaser.Input.Keyboard.Key
+  spell: Phaser.Input.Keyboard.Key
 }
 
 function scenePreload(this: Phaser.Scene) {
@@ -13,12 +14,14 @@ function scenePreload(this: Phaser.Scene) {
 
   // Sprites
   this.load.spritesheet('guy', 'images/wizard.png', { frameWidth: 64 })
+  this.load.spritesheet('energy-bolt', 'images/spells/energy-bolt.png', { frameWidth: 16 })
 }
 
 function sceneCreate(this: Phaser.Scene) {
   controls = {
     cursors: this.input.keyboard.createCursorKeys(),
     next: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
+    spell: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL),
   }
 
   // this.matter.world.setBounds(0, 0, settingsHelpers.worldBoundWidth, settingsHelpers.worldBoundHeight)
@@ -37,7 +40,7 @@ export const startGame = (): void => {
       default: 'matter',
       matter: {
         enableSleeping: false,
-        debug: true,
+        // debug: true,
         // gravity: {
         //   y: 1,
         //   x: 0,

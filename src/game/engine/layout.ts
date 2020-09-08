@@ -25,9 +25,11 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
   // Floor pieces. Player can stand on and jump from these
   layout.floors?.forEach((f) => {
     const floorKey = layout.images?.some((i) => !i.global && i.key === f.key) ? `${roomKey}-${f.key}` : f.key
-    // TODO: Get the width/height from the image size
-    const width = 128
-    const height = 64
+    const imageData = scene.game.textures.get(floorKey).get(0)
+
+    // Get the width/height from the image size
+    const width = imageData.width
+    const height = imageData.height
 
     for (let i = 0; i < f.repeat; i++) {
       currentObjects.images.push(scene.add.image(f.x + i * width, f.y, floorKey))

@@ -1,3 +1,4 @@
+import { EnergyBolt } from './objects/energy-bolt'
 import { Guy } from './objects/guy'
 
 /**
@@ -7,6 +8,7 @@ import { Guy } from './objects/guy'
  */
 class GameObjects {
   guy!: Guy
+  spells: EnergyBolt[] = []
 }
 
 export const gameObjects = new GameObjects()
