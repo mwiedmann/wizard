@@ -1,14 +1,17 @@
 {
-  "size": { "width": 960, "height": 540 },
+  "size": { "width": 1920, "height": 540 },
   "images": [{ "key": "background", "url": "backgrounds/great-hall-1.png" }],
-  "backgrounds": [{ "key": "background" }],
-  "blocks": [{ "x": 0, "y": 426, "width": 960, "height": 64 }],
+  "backgrounds": [
+    { "key": "background", "x": 480 },
+    { "key": "background", "x": 1440 }
+  ],
+  "blocks": [{ "x": 0, "y": 426, "width": 1920, "height": 64 }],
   "dropAreas": [
     { "key": "left", "x": 64, "y": 400 },
-    { "key": "right", "x": 900, "y": 400 }
+    { "key": "right", "x": 1856, "y": 400 }
   ],
   "gates": [
     { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "right" },
-    { "x": 951, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "left" }
+    { "x": 1910, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "left" }
   ]
 }

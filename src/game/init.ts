@@ -13,7 +13,8 @@ function scenePreload(this: Phaser.Scene) {
   this.load.image('title', 'images/title.png')
 
   // Sprites
-  this.load.spritesheet('guy', 'images/wizard.png', { frameWidth: 64 })
+  this.load.spritesheet('guy-run', 'images/guy-run-64x64.png', { frameWidth: 64 })
+  this.load.spritesheet('guy-jump', 'images/guy-jump-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('zombie', 'images/monsters/zombie-64x64x9.png', { frameWidth: 64 })
   this.load.spritesheet('energy-bolt', 'images/spells/energy-bolt.png', { frameWidth: 16 })
 }

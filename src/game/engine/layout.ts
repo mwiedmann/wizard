@@ -34,11 +34,42 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
   // Make sure gameObjects don't fall off the world
   scene.matter.world.setBounds(cornerX, cornerY, width, height)
 
+  // Calc the actual pixel width/height that the camera shows.
+  // We are zoomed in slightly so its less than the full game size.
+  // We can prob calc this once at game startup but we may want to allow the zoom level to change per room
+  const cameraBoundWidthMin = Math.floor(gameSettings.fieldWidth / gameSettings.gameCameraZoom)
+  const cameraBoundHeightMin = Math.floor(gameSettings.fieldHeight / gameSettings.gameCameraZoom)
+
+  // If the room fits within the camera size, then just use a fixed camera.
+  // Otherwise, set it to follow the guy with some lerp/deadzone allowance
+  const cameraBoundWidth = width <= cameraBoundWidthMin ? cameraBoundWidthMin : width
+  const cameraBoundHeight = height <= cameraBoundHeightMin ? cameraBoundHeightMin : height
+  const fixedCamera = width <= cameraBoundWidthMin && height <= cameraBoundHeightMin
+
+  scene.cameras.main.setBounds(
+    settingsHelpers.fieldWidthMid - cameraBoundWidth / 2,
+    settingsHelpers.fieldHeightMid - cameraBoundHeight / 2,
+    cameraBoundWidth,
+    cameraBoundHeight,
+    true
+  )
+
+  if (fixedCamera) {
+    scene.cameras.main.stopFollow()
+    scene.cameras.main.centerOn(settingsHelpers.fieldWidthMid, settingsHelpers.fieldHeightMid)
+    scene.cameras.main.setDeadzone(0, 0)
+  } else {
+    scene.cameras.main.startFollow(gameObjects.guy)
+    // scene.cameras.main.setLerp(0.1, 0.1) // Don't seem to need lerping for the camara in this game. TBD.
+    scene.cameras.main.setLerp(1, 1)
+    scene.cameras.main.setDeadzone(100, 100)
+  }
+
   // Static images on the level
   layout.backgrounds?.forEach((b) => {
     const backgroundKey = layout.images?.some((i) => !i.global && i.key === b.key) ? `${roomKey}-background` : b.key
     currentObjects.images.push(
-      scene.add.image(settingsHelpers.fieldWidthMid, settingsHelpers.fieldHeightMid, backgroundKey)
+      scene.add.image(b.x ?? settingsHelpers.fieldWidthMid, b.y ?? settingsHelpers.fieldHeightMid, backgroundKey)
     )
   })
 
@@ -123,5 +154,6 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
     }
     gameObjects.guy.setPosition(cornerX + guyLocation.x, cornerY + guyLocation.y)
   }
+
   gameObjects.guy.setDepth(1)
 }

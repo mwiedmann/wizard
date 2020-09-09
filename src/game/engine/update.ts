@@ -50,13 +50,18 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
     guy.setVelocity(guy.body.velocity.x > 0 ? sideVelocityLimit : -sideVelocityLimit, guy.body.velocity.y)
   }
 
-  if (running) {
-    guy.anims.play('guy-run', true)
+  // We only have 2 animations at this point (running and jumping)
+  // We will always use the running animation unless he is jumping
+  if (!guy.touchingFloor) {
+    guy.anims.play('guy-jump', true)
   } else {
+    guy.anims.play('guy-run', true)
+  }
+
+  // If the guy is on the floor and standing still, stop animations
+  if (guy.touchingFloor && !running) {
     guy.anims.stop()
-    if (guy.touchingFloor) {
-      guy.setVelocity(0, 0)
-    }
+    guy.setVelocity(0, 0)
   }
 
   // This will be reset by the collider every loop so we always

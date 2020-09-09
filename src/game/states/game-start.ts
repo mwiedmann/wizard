@@ -10,13 +10,21 @@ export const gameStartPreload = (scene: Phaser.Scene, roomKey: string): void => 
 }
 
 const gameStartInit = (scene: Phaser.Scene): void => {
-  gameObjects.guy = new Guy(scene.matter.world, 1000, 0, 'guy', 0)
+  gameObjects.guy = new Guy(scene.matter.world, 1000, 0, 'guy-run', 0)
   scene.anims.create({
     key: 'guy-run',
-    frames: scene.anims.generateFrameNumbers('guy', { start: 0, end: 2 }),
-    frameRate: 10,
+    frames: scene.anims.generateFrameNumbers('guy-run', { start: 0, end: 7 }),
+    frameRate: 12,
     repeat: -1,
-    yoyo: true,
+    // yoyo: true,
+  })
+
+  scene.anims.create({
+    key: 'guy-jump',
+    frames: scene.anims.generateFrameNumbers('guy-jump', {}),
+    frameRate: 12,
+    repeat: -1,
+    // yoyo: true,
   })
 
   // Monter animationa
@@ -40,10 +48,11 @@ const gameStartInit = (scene: Phaser.Scene): void => {
   scene.matter.body.setInertia(gameObjects.guy.body as MatterJS.BodyType, Infinity)
 
   scene.cameras.main.setZoom(gameSettings.gameCameraZoom)
-  scene.cameras.main.setDeadzone(100, 100)
-  scene.cameras.main.startFollow(gameObjects.guy)
-  scene.cameras.main.setLerp(0.1, 0.1)
-  scene.cameras.main.setBounds(0, 0, gameSettings.fieldWidth, gameSettings.fieldHeight)
+
+  // scene.cameras.main.setDeadzone(100, 100)
+  // scene.cameras.main.startFollow(gameObjects.guy)
+  // scene.cameras.main.setLerp(0.1, 0.1)
+  // scene.cameras.main.setBounds(0, 0, gameSettings.fieldWidth, gameSettings.fieldHeight)
 
   gameState.phase = 'gameEntry'
 }
