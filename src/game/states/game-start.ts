@@ -35,6 +35,15 @@ const gameStartInit = (scene: Phaser.Scene): void => {
     // yoyo: true,
   })
 
+  scene.anims.create({
+    key: 'guy-yawn',
+    frames: scene.anims.generateFrameNumbers('guy-yawn', {}),
+    frameRate: 5,
+    repeat: -1,
+    repeatDelay: 5000,
+    yoyo: true,
+  })
+
   // Monter animationa
   scene.anims.create({
     key: 'zombie-walk',

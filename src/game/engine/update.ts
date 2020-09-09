@@ -9,9 +9,17 @@ const sideVelocityLimit = 4
 let playerNextSpellTime = 0
 let shootTimeStart = 0
 
+/** Used to track idle time and trigger yawning and other idle animations */
+let lastActionTime = 0
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const update = (scene: Phaser.Scene, time: number, delta: number): void => {
   const { guy } = gameObjects
+
+  // Reset the lastActionTime to current
+  if (lastActionTime === 0) {
+    lastActionTime = time
+  }
 
   let running = false
   let shooting = false
@@ -19,22 +27,26 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   if (guy.touchingFloor && controls.cursors.up?.isDown && guy.lastJumpTime + 700 < time) {
     guy.applyForce(new Phaser.Math.Vector2(0, -3.7))
     guy.lastJumpTime = time
+    lastActionTime = time
   }
 
   if (controls.cursors.left?.isDown) {
     guy.setVelocityX(-sideVelocityLimit)
     running = true
     guy.flipX = true
+    lastActionTime = time
   }
 
   if (controls.cursors.right?.isDown) {
     guy.setVelocityX(sideVelocityLimit)
     running = true
     guy.flipX = false
+    lastActionTime = time
   }
 
   if (controls.spell.isDown && time > playerNextSpellTime) {
     shooting = true
+    lastActionTime = time
     const direction = guy.flipX ? -1 : 1
     const spell = new EnergyBolt(scene.matter.world, guy.x + direction * 32, guy.y, time, 'energy-bolt', 0)
     spell.fire(direction, 1000)
@@ -57,17 +69,24 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   // We only have 2 animations at this point (running and jumping)
   // We will always use the running animation unless he is jumping
   if (shootTimeStart + 150 < time) {
+    let yawning = false
     if (shooting) {
       shootTimeStart = time
       guy.anims.play('guy-shoot', true)
     } else if (!guy.touchingFloor) {
       guy.anims.play('guy-jump', true)
     } else {
-      guy.anims.play('guy-run', true)
+      // If use hasn't acted in some time, play the waiting animation
+      if (lastActionTime + 5000 < time) {
+        yawning = true
+        guy.anims.play('guy-yawn', true)
+      } else {
+        guy.anims.play('guy-run', true)
+      }
     }
 
     // If the guy is on the floor and standing still, stop animations
-    if (guy.touchingFloor && !running) {
+    if (!yawning && guy.touchingFloor && !running) {
       guy.anims.stop()
       guy.setVelocity(0, 0)
     }
