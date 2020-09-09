@@ -30,7 +30,7 @@ export class EnergyBolt extends Phaser.Physics.Matter.Sprite {
   remove = false
 
   fire(direction: number, lifespan: number): void {
-    this.setVelocity(direction * 8, 0)
+    this.setVelocity(direction * 10, 0)
 
     this.lifespan = lifespan
 
@@ -38,7 +38,7 @@ export class EnergyBolt extends Phaser.Physics.Matter.Sprite {
       speed: 30,
       scale: { start: 1, end: 0 },
       blendMode: 'ADD',
-      lifespan: 250,
+      lifespan: 150,
     })
 
     emitter.startFollow(this)

@@ -13,7 +13,7 @@ const gameStartInit = (scene: Phaser.Scene): void => {
   gameObjects.guy = new Guy(scene.matter.world, 1000, 0, 'guy-run', 0)
   scene.anims.create({
     key: 'guy-run',
-    frames: scene.anims.generateFrameNumbers('guy-run', { start: 0, end: 7 }),
+    frames: scene.anims.generateFrameNumbers('guy-run', {}),
     frameRate: 12,
     repeat: -1,
     // yoyo: true,
@@ -24,6 +24,14 @@ const gameStartInit = (scene: Phaser.Scene): void => {
     frames: scene.anims.generateFrameNumbers('guy-jump', {}),
     frameRate: 12,
     repeat: -1,
+    // yoyo: true,
+  })
+
+  scene.anims.create({
+    key: 'guy-shoot',
+    frames: scene.anims.generateFrameNumbers('guy-shoot', {}),
+    frameRate: 12,
+    repeat: 1,
     // yoyo: true,
   })
 

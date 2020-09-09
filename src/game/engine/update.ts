@@ -7,12 +7,14 @@ import { currentObjects } from './current-objects'
 const sideVelocityLimit = 4
 
 let playerNextSpellTime = 0
+let shootTimeStart = 0
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const update = (scene: Phaser.Scene, time: number, delta: number): void => {
   const { guy } = gameObjects
 
   let running = false
+  let shooting = false
 
   if (guy.touchingFloor && controls.cursors.up?.isDown && guy.lastJumpTime + 700 < time) {
     guy.applyForce(new Phaser.Math.Vector2(0, -3.7))
@@ -32,8 +34,10 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   }
 
   if (controls.spell.isDown && time > playerNextSpellTime) {
-    const spell = new EnergyBolt(scene.matter.world, guy.x, guy.y, time, 'energy-bolt', 0)
-    spell.fire(guy.flipX ? -1 : 1, 1000)
+    shooting = true
+    const direction = guy.flipX ? -1 : 1
+    const spell = new EnergyBolt(scene.matter.world, guy.x + direction * 32, guy.y, time, 'energy-bolt', 0)
+    spell.fire(direction, 1000)
     spell.setOnCollide((pair: Phaser.Types.Physics.Matter.MatterCollisionPair) => {
       spell.lifespan = 0
       // See if this is a monster and damage it if so
@@ -52,16 +56,21 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
 
   // We only have 2 animations at this point (running and jumping)
   // We will always use the running animation unless he is jumping
-  if (!guy.touchingFloor) {
-    guy.anims.play('guy-jump', true)
-  } else {
-    guy.anims.play('guy-run', true)
-  }
+  if (shootTimeStart + 150 < time) {
+    if (shooting) {
+      shootTimeStart = time
+      guy.anims.play('guy-shoot', true)
+    } else if (!guy.touchingFloor) {
+      guy.anims.play('guy-jump', true)
+    } else {
+      guy.anims.play('guy-run', true)
+    }
 
-  // If the guy is on the floor and standing still, stop animations
-  if (guy.touchingFloor && !running) {
-    guy.anims.stop()
-    guy.setVelocity(0, 0)
+    // If the guy is on the floor and standing still, stop animations
+    if (guy.touchingFloor && !running) {
+      guy.anims.stop()
+      guy.setVelocity(0, 0)
+    }
   }
 
   // This will be reset by the collider every loop so we always
