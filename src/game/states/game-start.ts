@@ -45,5 +45,5 @@ const gameStartInit = (scene: Phaser.Scene): void => {
   scene.cameras.main.setLerp(0.1, 0.1)
   scene.cameras.main.setBounds(0, 0, gameSettings.fieldWidth, gameSettings.fieldHeight)
 
-  gameState.phase = 'gameA1'
+  gameState.phase = 'gameEntry'
 }

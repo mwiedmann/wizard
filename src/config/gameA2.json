@@ -1,5 +1,0 @@
-{
-  "size": { "width": 500, "height": 500 },
-  "backgrounds": [{ "key": "small-wall" }],
-  "dropAreas": [{ "key": "main", "x": 250, "y": 100 }]
-}

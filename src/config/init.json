@@ -1,8 +1,1 @@
-{
-  "images": [
-    { "global": true, "key": "background", "url": "backgrounds/stone-wall-1920x1080.jpg" },
-    { "global": true, "key": "small-wall", "url": "backgrounds/wall-750x750.png" },
-    { "global": true, "key": "portal", "url": "gates/portal.png" },
-    { "global": true, "key": "floor-1", "url": "floors/a1.png" }
-  ]
-}
+{}
