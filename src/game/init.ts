@@ -13,11 +13,11 @@ function scenePreload(this: Phaser.Scene) {
   this.load.image('title', 'images/title.png')
 
   // Sprites
-  this.load.spritesheet('guy-run', 'images/guy-run-64x64.png', { frameWidth: 64 })
+  this.load.spritesheet('guy-run', 'images/guy-run-55x59.png', { frameWidth: 55, frameHeight: 59 })
   this.load.spritesheet('guy-jump', 'images/guy-jump-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('guy-shoot', 'images/guy-shoot-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('guy-yawn', 'images/guy-yawn-64x64.png', { frameWidth: 64 })
-  this.load.spritesheet('zombie', 'images/monsters/zombie-64x64x9.png', { frameWidth: 64 })
+  this.load.spritesheet('ghost', 'images/monsters/ghost-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('energy-bolt', 'images/spells/energy-bolt.png', { frameWidth: 16 })
 }
 
@@ -44,7 +44,7 @@ export const startGame = (): void => {
       default: 'matter',
       matter: {
         enableSleeping: false,
-        // debug: true,
+        debug: true,
         // gravity: {
         //   y: 1,
         //   x: 0,

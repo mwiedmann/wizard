@@ -1,0 +1,26 @@
+{
+  "size": { "width": 960, "height": 540 },
+  "images": [{ "key": "background", "url": "backgrounds/great-hall-east-pit.png" }],
+  "backgrounds": [{ "key": "background" }],
+  "blocks": [
+    { "x": 0, "y": 426, "width": 308, "height": 114 },
+    { "x": 396, "y": 426, "width": 564, "height": 114 },
+    { "x": 0, "y": 76, "width": 28, "height": 261 },
+    { "x": 0, "y": 337, "width": 80, "height": 16 },
+    { "x": 0, "y": 63, "width": 80, "height": 12 },
+    { "x": 173, "y": 260, "width": 119, "height": 12 },
+    { "x": 403, "y": 183, "width": 119, "height": 12 },
+    { "x": 173, "y": 115, "width": 119, "height": 12 },
+    { "x": 0, "y": 63, "width": 81, "height": 12 }
+  ],
+  "dropAreas": [
+    { "key": "left", "x": 64, "y": 400 },
+    { "key": "right", "x": 900, "y": 400 }
+  ],
+  "gates": [
+    { "x": 0, "y": 351, "width": 8, "height": 77, "toRoom": "gameGHWest", "dropArea": "right" },
+    { "x": 0, "y": 0, "width": 8, "height": 64, "toRoom": "gameGHWest", "dropArea": "right" },
+    { "x": 950, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEast", "dropArea": "left" },
+    { "x": 308, "y": 530, "width": 88, "height": 10, "toRoom": "gameEntry", "dropArea": "main" }
+  ]
+}

@@ -1,3 +1,4 @@
+import { gameObjects } from '../game-objects'
 import { currentObjects } from './current-objects'
 
 export const cleanup = (scene: Phaser.Scene): void => {
@@ -14,5 +15,9 @@ export const cleanup = (scene: Phaser.Scene): void => {
   currentObjects.blocks = []
   currentObjects.monsters = []
 
-  // TODO: How to clean up the collider between the guy and gate? Do we need to?
+  // Cleanup any gameObjects for this room (e.g. spells)
+  gameObjects.spells.forEach((spell) => {
+    spell.done()
+  })
+  gameObjects.spells = []
 }

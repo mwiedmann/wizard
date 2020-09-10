@@ -11,7 +11,11 @@
     { "key": "right", "x": 1856, "y": 400 }
   ],
   "gates": [
-    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "right" },
+    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEastPit", "dropArea": "right" },
     { "x": 1910, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "left" }
+  ],
+  "monsters": [
+    { "type": "ghost", "x": 640, "y": 400 },
+    { "type": "ghost", "x": 1280, "y": 400 }
   ]
 }

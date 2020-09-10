@@ -1,9 +1,9 @@
 import { gameSettings, settingsHelpers } from '../consts'
 import { gameObjects } from '../game-objects'
-import { Zombie } from '../objects/zombie'
 import { gameState } from '../scene-update'
 import { collisionCategories, collisionMasks } from './collisions'
 import { currentObjects } from './current-objects'
+import { monsterFactory } from './monster-factory'
 
 export interface ILayout {
   size?: { x?: number; y?: number; width: number; height: number }
@@ -139,11 +139,11 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
   })
 
   layout.monsters?.forEach((monster) => {
-    const zombie = new Zombie(scene.matter.world, cornerX + monster.x, cornerY + monster.y, 'zombie', 0)
-    zombie.anims.play('zombie-walk', true)
-    scene.add.existing(zombie)
-    scene.matter.body.setInertia(zombie.body as MatterJS.BodyType, Infinity)
-    currentObjects.monsters.push(zombie)
+    const createdMonster = monsterFactory(scene, monster.type, cornerX + monster.x, cornerY + monster.y)
+    createdMonster.anims.play(monster.type, true)
+    scene.add.existing(createdMonster)
+    scene.matter.body.setInertia(createdMonster.body as MatterJS.BodyType, Infinity)
+    currentObjects.monsters.push(createdMonster)
   })
 
   // Move the guy to the dropArea

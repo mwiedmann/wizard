@@ -25,7 +25,7 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   let shooting = false
 
   if (guy.touchingFloor && controls.cursors.up?.isDown && guy.lastJumpTime + 700 < time) {
-    guy.applyForce(new Phaser.Math.Vector2(0, -3.7))
+    guy.applyForce(new Phaser.Math.Vector2(0, guy.jumpForce()))
     guy.lastJumpTime = time
     lastActionTime = time
   }
@@ -112,7 +112,7 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   // Update any remaining monsters
   currentObjects.monsters.forEach((monster) => {
     monster.setVelocityX(monster.x < guy.x ? 1 : -1)
-    monster.flipX = monster.x < guy.x
+    monster.flipX = monster.x > guy.x
   })
 }
 

@@ -46,9 +46,9 @@ const gameStartInit = (scene: Phaser.Scene): void => {
 
   // Monter animationa
   scene.anims.create({
-    key: 'zombie-walk',
-    frames: scene.anims.generateFrameNumbers('zombie', { start: 0, end: 4 }),
-    frameRate: 7,
+    key: 'ghost',
+    frames: scene.anims.generateFrameNumbers('ghost', {}),
+    frameRate: 8,
     repeat: -1,
   })
 
