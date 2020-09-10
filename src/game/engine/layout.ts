@@ -19,6 +19,7 @@ const xFromWidth = (width: number, x: number) => settingsHelpers.fieldWidthMid -
 const yFromHeight = (height: number, y: number) => settingsHelpers.fieldHeightMid - height / 2 + y
 
 export const layout = (scene: Phaser.Scene, roomKey: string): void => {
+  console.log('Starting layout for', roomKey)
   const layout: ILayout = scene.game.cache.json.get(roomKey)
 
   // Ok, so if the size of this level is different than the game size,

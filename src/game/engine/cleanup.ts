@@ -2,6 +2,7 @@ import { gameObjects } from '../game-objects'
 import { currentObjects } from './current-objects'
 
 export const cleanup = (scene: Phaser.Scene): void => {
+  console.log('cleanup')
   currentObjects.images.forEach((image) => {
     scene.matter.world.remove(image)
     image.destroy()

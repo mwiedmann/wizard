@@ -35,6 +35,7 @@ let lastState: string | undefined = undefined
 export function sceneUpdate(this: Phaser.Scene, time: number, delta: number): void {
   // See if we are moving to another phase
   if (lastState !== gameState.phase) {
+    console.log('transition', lastState, gameState.phase)
     // Cleanup the last phase (if needed)
     if (lastState) {
       // Some states may have custom cleanup

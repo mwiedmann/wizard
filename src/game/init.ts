@@ -44,7 +44,7 @@ export const startGame = (): void => {
       default: 'matter',
       matter: {
         enableSleeping: false,
-        debug: true,
+        // debug: true,
         // gravity: {
         //   y: 1,
         //   x: 0,

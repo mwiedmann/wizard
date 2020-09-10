@@ -11,6 +11,7 @@ export const preloadRoom = (
 
   /** Helper to call custom init or standard layout and mark the preload as complete */
   const loadingComplete = () => {
+    console.log('loadingComplete', roomKey)
     if (init) {
       init(scene, roomKey)
     } else {
@@ -38,7 +39,7 @@ export const preloadRoom = (
 
     scene.load.on('filecomplete', (loadedFile: string) => {
       filesRemaining -= 1
-      console.log('Loaded image:', loadedFile, ' files remaining:', filesRemaining)
+      console.log('Loaded image:', loadedFile, ' files remaining:', filesRemaining, roomKey)
 
       if (filesRemaining === 0) {
         scene.load.off('filecomplete')
@@ -50,19 +51,21 @@ export const preloadRoom = (
       const imageKey = image.global ? image.key : `${roomKey}-${image.key}`
       scene.load.image(imageKey, `images/${image.url}`)
       scene.load.start()
+      console.log('starting image load:', `images/${image.url}`, roomKey)
     })
   }
 
-  // We need to use a filecomplete event when loading the json for the 1st time
-  scene.load.once('filecomplete', () => {
-    console.log('Loaded json')
-    jsonLoaded()
-  })
-
   // Load room JSON or pull from cache
   if (!scene.game.cache.json.has(roomKey)) {
+    // We need to use a filecomplete event when loading the json for the 1st time
+    scene.load.once('filecomplete', () => {
+      console.log('Loaded json', roomKey)
+      jsonLoaded()
+    })
+
     scene.load.json(roomKey, `config/${roomKey}.json`)
     scene.load.start()
+    console.log('starting json load:', roomKey)
   } else {
     jsonLoaded()
   }
