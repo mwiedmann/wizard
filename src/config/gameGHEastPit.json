@@ -18,9 +18,9 @@
     { "key": "right", "x": 900, "y": 400 }
   ],
   "gates": [
-    { "x": 0, "y": 351, "width": 8, "height": 77, "toRoom": "gameGHWest", "dropArea": "right" },
-    { "x": 0, "y": 0, "width": 8, "height": 64, "toRoom": "gameGHWest", "dropArea": "right" },
-    { "x": 950, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEast", "dropArea": "left" },
+    { "x": 0, "y": 351, "width": 8, "height": 77, "toRoom": "gameGHEast", "dropArea": "right" },
+    { "x": 0, "y": 0, "width": 8, "height": 64, "toRoom": "gameGHEast", "dropArea": "right" },
+    { "x": 950, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHWest", "dropArea": "left" },
     { "x": 308, "y": 530, "width": 88, "height": 10, "toRoom": "gameEntry", "dropArea": "main" }
   ]
 }

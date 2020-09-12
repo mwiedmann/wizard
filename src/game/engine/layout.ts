@@ -8,9 +8,28 @@ import { monsterFactory } from './monster-factory'
 export interface ILayout {
   size?: { x?: number; y?: number; width: number; height: number }
   images?: { global?: boolean; key: string; url: string }[]
-  backgrounds?: [{ key: string; x?: number; y?: number }]
-  blocks?: { key?: string; x: number; y: number; repeat?: number; width?: number; height?: number }[]
-  gates?: { key?: string; x: number; y: number; width: number; height: number; toRoom: string; dropArea: string }[]
+  backgrounds?: [{ key: string; activateKey?: string; x?: number; y?: number }]
+  blocks?: {
+    key?: string
+    activateKey?: string
+    onTouch?: { key: string; isToggle?: boolean }
+    isSolid?: boolean
+    x: number
+    y: number
+    repeat?: number
+    width?: number
+    height?: number
+  }[]
+  gates?: {
+    key?: string
+    activateKey?: string
+    x: number
+    y: number
+    width: number
+    height: number
+    toRoom: string
+    dropArea: string
+  }[]
   dropAreas?: [{ key: string; x: number; y: number }]
   monsters?: [{ type: string; x: number; y: number }]
 }
@@ -67,42 +86,83 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
   }
 
   // Static images on the level
-  layout.backgrounds?.forEach((b) => {
-    const backgroundKey = layout.images?.some((i) => !i.global && i.key === b.key) ? `${roomKey}-background` : b.key
+  layout.backgrounds?.forEach((backConfig) => {
+    // If there is an activeKey but it hasn't been set then skip this one
+    if (backConfig.activateKey && !gameState.state[backConfig.activateKey]) {
+      return
+    }
+    const backgroundKey = layout.images?.some((i) => !i.global && i.key === backConfig.key)
+      ? `${roomKey}-background`
+      : backConfig.key
     currentObjects.images.push(
-      scene.add.image(b.x ?? settingsHelpers.fieldWidthMid, b.y ?? settingsHelpers.fieldHeightMid, backgroundKey)
+      scene.add.image(
+        backConfig.x ?? settingsHelpers.fieldWidthMid,
+        backConfig.y ?? settingsHelpers.fieldHeightMid,
+        backgroundKey
+      )
     )
   })
 
   // Blocking pieces (floors/walls). Player can stand on and jump from these
-  layout.blocks?.forEach((f) => {
-    const imageKey = f.key && layout.images?.some((i) => !i.global && i.key === f.key) ? `${roomKey}-${f.key}` : f.key
+  layout.blocks?.forEach((blockConfig) => {
+    // If there is an activeKey but it hasn't been set then skip this one
+    if (blockConfig.activateKey && !gameState.state[blockConfig.activateKey]) {
+      return
+    }
+    const imageKey =
+      blockConfig.key && layout.images?.some((i) => !i.global && i.key === blockConfig.key)
+        ? `${roomKey}-${blockConfig.key}`
+        : blockConfig.key
     const imageData = imageKey ? scene.game.textures.get(imageKey).get(0) : undefined
 
     // Get the width/height from the image size or json
-    const width = f.width ?? imageData?.width ?? 0
-    const height = f.height ?? imageData?.height ?? 0
-    const repeat = f.repeat ?? 1
+    const width = blockConfig.width ?? imageData?.width ?? 0
+    const height = blockConfig.height ?? imageData?.height ?? 0
+    const repeat = blockConfig.repeat ?? 1
 
+    // Repeat lets you repeat the same block a number of times (default is 1)
     for (let i = 0; i < repeat; i++) {
       if (imageKey) {
         currentObjects.images.push(
-          scene.add.image(cornerX + f.x + width / 2 + i * width, cornerY + f.y + height / 2, imageKey)
+          scene.add.image(
+            cornerX + blockConfig.x + width / 2 + i * width,
+            cornerY + blockConfig.y + height / 2,
+            imageKey
+          )
         )
       }
 
-      currentObjects.blocks.push(
-        scene.matter.add.rectangle(cornerX + f.x + width / 2 + i * width, cornerY + f.y + height / 2, width, height, {
+      const createdBlock = scene.matter.add.rectangle(
+        cornerX + blockConfig.x + width / 2 + i * width,
+        cornerY + blockConfig.y + height / 2,
+        width,
+        height,
+        {
           isStatic: true,
           collisionFilter: { category: collisionCategories.static, mask: collisionMasks.static },
-        })
+        }
       )
+
+      // Touching the block could trigger a state change
+      if (blockConfig.onTouch) {
+        const onTouch = blockConfig.onTouch
+        createdBlock.setOnCollideWith(gameObjects.guy.body as MatterJS.BodyType, () => {
+          gameState.state[onTouch.key] = onTouch.isToggle ? !gameState.state[onTouch.key] : true
+          console.log('triggered block', onTouch)
+        })
+      }
+
+      currentObjects.blocks.push(createdBlock)
     }
   })
 
   // Gate take the player to another room.
   // They can optionally have an image
   layout.gates?.forEach((gate) => {
+    // If there is an activeKey but it hasn't been set then skip this one
+    if (gate.activateKey && !gameState.state[gate.activateKey]) {
+      return
+    }
     const imageKey =
       gate.key && layout.images?.some((i) => !i.global && i.key === gate.key) ? `${roomKey}-${gate.key}` : gate.key
     const imageData = imageKey ? scene.game.textures.get(imageKey).get(0) : undefined

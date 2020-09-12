@@ -4,7 +4,7 @@
   "backgrounds": [{ "key": "background" }],
   "blocks": [
     { "x": 0, "y": 426, "width": 960, "height": 64 },
-    { "x": 200, "y": 354, "width": 128, "height": 8 }
+    { "onTouch": { "key": "test", "isToggle": true }, "x": 200, "y": 354, "width": 128, "height": 8 }
   ],
   "dropAreas": [
     { "key": "main", "x": 480, "y": 400 },
@@ -12,7 +12,7 @@
     { "key": "right", "x": 900, "y": 400 }
   ],
   "gates": [
-    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEast", "dropArea": "right" },
-    { "x": 951, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHWest", "dropArea": "left" }
+    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHWest", "dropArea": "right" },
+    { "x": 951, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEast", "dropArea": "left" }
   ]
 }

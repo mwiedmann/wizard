@@ -10,14 +10,14 @@
   ],
   "blocks": [
     { "x": 0, "y": 426, "width": 1920, "height": 64 },
-    { "key": "castle-float-1", "x": 960, "y": 300 }
+    { "key": "castle-float-1", "activateKey": "test", "x": 960, "y": 300 }
   ],
   "dropAreas": [
     { "key": "left", "x": 64, "y": 400 },
     { "key": "right", "x": 1856, "y": 400 }
   ],
   "gates": [
-    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "right" },
-    { "x": 1910, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEastPit", "dropArea": "left" }
+    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameGHEastPit", "dropArea": "right" },
+    { "x": 1910, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "left" }
   ]
 }
