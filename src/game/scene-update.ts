@@ -11,11 +11,13 @@ export const gameState: {
   nextStateTransitionTime: number
   dropArea: string
   state: { [key: string]: boolean }
+  stateChanged: boolean
 } = {
   phase: 'init',
   nextStateTransitionTime: 0,
   dropArea: 'main',
   state: {},
+  stateChanged: false,
 }
 
 /** Define any custom preload/update/cleanup for game phases.

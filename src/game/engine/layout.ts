@@ -1,35 +1,44 @@
 import { gameSettings, settingsHelpers } from '../consts'
 import { gameObjects } from '../game-objects'
 import { gameState } from '../scene-update'
-import { collisionCategories, collisionMasks } from './collisions'
+import { ActivateBlock, ActivateGate, ActivateImage } from './activate-object'
 import { currentObjects } from './current-objects'
 import { monsterFactory } from './monster-factory'
+
+export interface IOnTouch {
+  key: string
+  isToggle?: boolean
+}
+
+export interface IBlockLayout {
+  key?: string
+  activateKey?: string
+  onTouch?: IOnTouch
+  isEmpty?: boolean
+  x: number
+  y: number
+  repeat?: number
+  width?: number
+  height?: number
+}
+
+export interface IGateLayout {
+  key?: string
+  activateKey?: string
+  x: number
+  y: number
+  width: number
+  height: number
+  toRoom: string
+  dropArea: string
+}
 
 export interface ILayout {
   size?: { x?: number; y?: number; width: number; height: number }
   images?: { global?: boolean; key: string; url: string }[]
   backgrounds?: [{ key: string; activateKey?: string; x?: number; y?: number }]
-  blocks?: {
-    key?: string
-    activateKey?: string
-    onTouch?: { key: string; isToggle?: boolean }
-    isSolid?: boolean
-    x: number
-    y: number
-    repeat?: number
-    width?: number
-    height?: number
-  }[]
-  gates?: {
-    key?: string
-    activateKey?: string
-    x: number
-    y: number
-    width: number
-    height: number
-    toRoom: string
-    dropArea: string
-  }[]
+  blocks?: IBlockLayout[]
+  gates?: IGateLayout[]
   dropAreas?: [{ key: string; x: number; y: number }]
   monsters?: [{ type: string; x: number; y: number }]
 }
@@ -87,28 +96,27 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
 
   // Static images on the level
   layout.backgrounds?.forEach((backConfig) => {
-    // If there is an activeKey but it hasn't been set then skip this one
-    if (backConfig.activateKey && !gameState.state[backConfig.activateKey]) {
-      return
-    }
     const backgroundKey = layout.images?.some((i) => !i.global && i.key === backConfig.key)
       ? `${roomKey}-background`
       : backConfig.key
-    currentObjects.images.push(
-      scene.add.image(
-        backConfig.x ?? settingsHelpers.fieldWidthMid,
-        backConfig.y ?? settingsHelpers.fieldHeightMid,
-        backgroundKey
-      )
+
+    const imageActivator = new ActivateImage(
+      backConfig.activateKey,
+      backgroundKey,
+      backConfig.x ?? settingsHelpers.fieldWidthMid,
+      backConfig.y ?? settingsHelpers.fieldHeightMid
     )
+
+    // If there is no activateKey or it is already active, fire the event and create the image
+    if (!backConfig.activateKey || gameState.state[backConfig.activateKey]) {
+      imageActivator.create(scene)
+    }
+
+    currentObjects.images.push(imageActivator)
   })
 
   // Blocking pieces (floors/walls). Player can stand on and jump from these
   layout.blocks?.forEach((blockConfig) => {
-    // If there is an activeKey but it hasn't been set then skip this one
-    if (blockConfig.activateKey && !gameState.state[blockConfig.activateKey]) {
-      return
-    }
     const imageKey =
       blockConfig.key && layout.images?.some((i) => !i.global && i.key === blockConfig.key)
         ? `${roomKey}-${blockConfig.key}`
@@ -122,81 +130,54 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
 
     // Repeat lets you repeat the same block a number of times (default is 1)
     for (let i = 0; i < repeat; i++) {
-      if (imageKey) {
-        currentObjects.images.push(
-          scene.add.image(
-            cornerX + blockConfig.x + width / 2 + i * width,
-            cornerY + blockConfig.y + height / 2,
-            imageKey
-          )
-        )
-      }
-
-      const createdBlock = scene.matter.add.rectangle(
+      const blockActivator = new ActivateBlock(
+        blockConfig.activateKey,
+        imageKey,
         cornerX + blockConfig.x + width / 2 + i * width,
         cornerY + blockConfig.y + height / 2,
         width,
         height,
-        {
-          isStatic: true,
-          collisionFilter: { category: collisionCategories.static, mask: collisionMasks.static },
-        }
+        blockConfig
       )
 
-      // Touching the block could trigger a state change
-      if (blockConfig.onTouch) {
-        const onTouch = blockConfig.onTouch
-        createdBlock.setOnCollideWith(gameObjects.guy.body as MatterJS.BodyType, () => {
-          gameState.state[onTouch.key] = onTouch.isToggle ? !gameState.state[onTouch.key] : true
-          console.log('triggered block', onTouch)
-        })
+      // If there is no activateKey or it is active, then create the block
+      if (!blockConfig.activateKey || gameState.state[blockConfig.activateKey]) {
+        blockActivator.create(scene)
       }
 
-      currentObjects.blocks.push(createdBlock)
+      currentObjects.blocks.push(blockActivator)
     }
   })
 
   // Gate take the player to another room.
   // They can optionally have an image
-  layout.gates?.forEach((gate) => {
-    // If there is an activeKey but it hasn't been set then skip this one
-    if (gate.activateKey && !gameState.state[gate.activateKey]) {
-      return
-    }
+  layout.gates?.forEach((gateConfig) => {
     const imageKey =
-      gate.key && layout.images?.some((i) => !i.global && i.key === gate.key) ? `${roomKey}-${gate.key}` : gate.key
+      gateConfig.key && layout.images?.some((i) => !i.global && i.key === gateConfig.key)
+        ? `${roomKey}-${gateConfig.key}`
+        : gateConfig.key
     const imageData = imageKey ? scene.game.textures.get(imageKey).get(0) : undefined
 
     // Get the width/height from the image size or json
-    const width = gate.width ?? imageData?.width ?? 0
-    const height = gate.height ?? imageData?.height ?? 0
+    const width = gateConfig.width ?? imageData?.width ?? 0
+    const height = gateConfig.height ?? imageData?.height ?? 0
 
-    // Optional image - key is image key
-    if (imageKey) {
-      scene.add.image(cornerX + gate.x + width / 2, cornerY + gate.y + height / 2, imageKey)
-    }
-
-    // Create a collision area
-    const gateObject = scene.matter.add.rectangle(
-      cornerX + gate.x + width / 2,
-      cornerY + gate.y + height / 2,
+    const gateActivator = new ActivateGate(
+      gateConfig.activateKey,
+      imageKey,
+      cornerX + gateConfig.x + width / 2,
+      cornerY + gateConfig.y + height / 2,
       width,
       height,
-      {
-        isStatic: true,
-      }
+      gateConfig
     )
 
-    // Create a collider for the area that take the player to the linked room
-    // TODO: How do we clean this up? Does it get removed when the gateObject/collision area is deleted?
-    gateObject.setOnCollideWith(gameObjects.guy.body as MatterJS.BodyType, () => {
-      gameState.phase = gate.toRoom
-      gameState.dropArea = gate.dropArea
-      gameObjects.guy.setVelocity(0, 0)
-      console.log('hit gate', gate.toRoom, gate.dropArea)
-    })
+    // If there is no activateKey or it is active, then create the block
+    if (!gateConfig.activateKey || gameState.state[gateConfig.activateKey]) {
+      gateActivator.create(scene)
+    }
 
-    currentObjects.blocks.push(gateObject)
+    currentObjects.blocks.push(gateActivator)
   })
 
   layout.monsters?.forEach((monster) => {

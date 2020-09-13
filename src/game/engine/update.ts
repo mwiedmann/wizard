@@ -2,7 +2,8 @@ import { gameObjects } from '../game-objects'
 import { controls } from '../init'
 import { EnergyBolt } from '../objects/energy-bolt'
 import { MonsterBase } from '../objects/monster-base'
-import { currentObjects } from './current-objects'
+import { gameState } from '../scene-update'
+import { currentObjects, objectsWithActiveKey } from './current-objects'
 
 const sideVelocityLimit = 4
 
@@ -95,6 +96,12 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
   // This will be reset by the collider every loop so we always
   // want to set this to false to see if the guy is still touching the floor
   guy.touchingFloor = false
+
+  // See if any state changes have activated or removed objects in the room
+  if (gameState.stateChanged) {
+    objectsWithActiveKey().forEach((obj) => obj.checkState(scene))
+    gameState.stateChanged = false
+  }
 
   // Update all active spells and check if any of them have expired
   gameObjects.spells.forEach((spell) => {

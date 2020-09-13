@@ -10,7 +10,8 @@
   ],
   "blocks": [
     { "x": 0, "y": 426, "width": 1920, "height": 64 },
-    { "key": "castle-float-1", "activateKey": "test", "x": 960, "y": 300 }
+    { "key": "castle-float-1", "activateKey": "test", "x": 960, "y": 300 },
+    { "onTouch": { "key": "test", "isToggle": true }, "x": 1400, "y": 300, "width": 128, "height": 8 }
   ],
   "dropAreas": [
     { "key": "left", "x": 64, "y": 400 },
