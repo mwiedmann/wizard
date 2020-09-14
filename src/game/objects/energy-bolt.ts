@@ -20,8 +20,8 @@ export class EnergyBolt extends Phaser.Physics.Matter.Sprite {
         mask: collisionMasks.guySpell,
       },
     })
-
-    this.particleManager = this.scene.add.particles('energy-bolt')
+    this.setDepth(998)
+    this.particleManager = this.scene.add.particles('energy-bolt').setDepth(998)
   }
 
   particleManager: Phaser.GameObjects.Particles.ParticleEmitterManager
@@ -31,7 +31,6 @@ export class EnergyBolt extends Phaser.Physics.Matter.Sprite {
 
   fire(direction: number, lifespan: number): void {
     this.setVelocity(direction * 10, 0)
-
     this.lifespan = lifespan
 
     const emitter = this.particleManager.createEmitter({

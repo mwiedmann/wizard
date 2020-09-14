@@ -8,6 +8,7 @@ export class MonsterBase extends Phaser.Physics.Matter.Sprite {
     texture: string,
     frame: string | integer,
     public monsterType: string,
+    imageDepth: number,
     options?: Phaser.Types.Physics.Matter.MatterBodyConfig
   ) {
     super(world, x, y, texture, frame, {
@@ -17,6 +18,7 @@ export class MonsterBase extends Phaser.Physics.Matter.Sprite {
       density: 0.025,
       collisionFilter: { category: collisionCategories.monster, mask: collisionMasks.monster },
     })
+    this.setDepth(imageDepth)
   }
 
   remove = false

@@ -50,6 +50,7 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
     lastActionTime = time
     const direction = guy.flipX ? -1 : 1
     const spell = new EnergyBolt(scene.matter.world, guy.x + direction * 32, guy.y, time, 'energy-bolt', 0)
+    scene.add.existing(spell)
     spell.fire(direction, 1000)
     spell.setOnCollide((pair: Phaser.Types.Physics.Matter.MatterCollisionPair) => {
       spell.lifespan = 0
@@ -59,6 +60,7 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
         bodyHit.done()
       }
     })
+    spell.setDepth(998)
     gameObjects.spells.push(spell)
     playerNextSpellTime = time + 1000
   }

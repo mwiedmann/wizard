@@ -200,7 +200,7 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
   })
 
   layout.monsters?.forEach((monster) => {
-    const createdMonster = monsterFactory(scene, monster.type, cornerX + monster.x, cornerY + monster.y)
+    const createdMonster = monsterFactory(scene, monster.type, cornerX + monster.x, cornerY + monster.y, imageDepth++)
     createdMonster.anims.play(monster.type, true)
     scene.add.existing(createdMonster)
     scene.matter.body.setInertia(createdMonster.body as MatterJS.BodyType, Infinity)
