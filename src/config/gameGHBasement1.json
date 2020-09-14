@@ -1,0 +1,24 @@
+{
+  "size": { "width": 960, "height": 540 },
+  "images": [
+    { "key": "background", "url": "backgrounds/castle-brick-960x540.png" },
+    { "key": "foreground", "url": "backgrounds/GHBasement1.png" },
+    { "key": "red-beam", "url": "red-beam-128x16.png" },
+    { "key": "door", "url": "gates/castle-open-door-77x83.png" }
+  ],
+  "backgrounds": [{ "key": "background" }, { "key": "foreground" }],
+  "blocks": [
+    { "x": 0, "y": 0, "width": 960, "height": 32 },
+    { "x": 0, "y": 0, "width": 42, "height": 540 },
+    { "x": 0, "y": 169, "width": 694, "height": 32 },
+    { "x": 838, "y": 169, "width": 132, "height": 32 },
+    { "key": "red-beam", "activateKey": "gh-red-1", "activateReverse": true, "x": 702, "y": 180 },
+    { "x": 918, "y": 0, "width": 42, "height": 540 },
+    { "x": 0, "y": 490, "width": 960, "height": 32 }
+  ],
+  "dropAreas": [{ "key": "top", "x": 350, "y": 64 }],
+  "gates": [
+    { "key": "door", "x": 52, "y": 86, "toRoom": "gameEntry", "dropArea": "main" },
+    { "key": "door", "x": 52, "y": 407, "toRoom": "gameEntry", "dropArea": "main" }
+  ]
+}

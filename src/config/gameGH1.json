@@ -2,7 +2,9 @@
   "size": { "width": 1920, "height": 540 },
   "images": [
     { "key": "background", "url": "backgrounds/great-hall-1.png" },
-    { "key": "castle-float-1", "url": "floors/castle-float-256x49.png" }
+    { "key": "castle-float-1", "url": "floors/castle-float-256x49.png" },
+    { "key": "small-float", "url": "floors/castle-platform-49x55.png" },
+    { "key": "pressure", "url": "floors/castle-pressure-plate-red-47x8.png" }
   ],
   "backgrounds": [
     { "key": "background", "x": 480 },
@@ -13,9 +15,10 @@
     { "key": "castle-float-1", "x": 1660, "y": 150 },
     { "key": "castle-float-1", "x": 1255, "y": 150 },
     { "key": "castle-float-1", "x": 850, "y": 150 },
+    { "key": "small-float", "x": 754, "y": 260 },
+    { "key": "pressure", "onTouch": { "key": "gh-red-1" }, "x": 755, "y": 252 },
     { "key": "castle-float-1", "x": 430, "y": 150 },
-    { "key": "castle-float-1", "x": 0, "y": 150 },
-    { "onTouch": { "key": "test", "isToggle": true }, "x": 1400, "y": 300, "width": 128, "height": 8 }
+    { "key": "castle-float-1", "x": 0, "y": 150 }
   ],
   "dropAreas": [
     { "key": "left", "x": 64, "y": 400 },

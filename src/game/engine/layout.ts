@@ -13,6 +13,7 @@ export interface IOnTouch {
 export interface IBlockLayout {
   key?: string
   activateKey?: string
+  activateReverse?: boolean
   onTouch?: IOnTouch
   isEmpty?: boolean
   x: number
@@ -25,6 +26,7 @@ export interface IBlockLayout {
 export interface IGateLayout {
   key?: string
   activateKey?: string
+  activateReverse?: boolean
   x: number
   y: number
   width: number
@@ -36,7 +38,7 @@ export interface IGateLayout {
 export interface ILayout {
   size?: { x?: number; y?: number; width: number; height: number }
   images?: { global?: boolean; key: string; url: string }[]
-  backgrounds?: [{ key: string; activateKey?: string; x?: number; y?: number }]
+  backgrounds?: [{ key: string; activateKey?: string; activateReverse?: boolean; x?: number; y?: number }]
   blocks?: IBlockLayout[]
   gates?: IGateLayout[]
   dropAreas?: [{ key: string; x: number; y: number }]
@@ -94,22 +96,29 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
     scene.cameras.main.setDeadzone(100, 100)
   }
 
+  let imageDepth = 1
+
   // Static images on the level
   layout.backgrounds?.forEach((backConfig) => {
     const backgroundKey = layout.images?.some((i) => !i.global && i.key === backConfig.key)
-      ? `${roomKey}-background`
+      ? `${roomKey}-${backConfig.key}`
       : backConfig.key
 
     const imageActivator = new ActivateImage(
       backConfig.activateKey,
+      backConfig.activateReverse,
       backgroundKey,
       backConfig.x ?? settingsHelpers.fieldWidthMid,
-      backConfig.y ?? settingsHelpers.fieldHeightMid
+      backConfig.y ?? settingsHelpers.fieldHeightMid,
+      imageDepth++
     )
 
-    // If there is no activateKey or it is already active, fire the event and create the image
-    if (!backConfig.activateKey || gameState.state[backConfig.activateKey]) {
+    // If there is no activateKey then create the image,
+    // otherwise check the state
+    if (!backConfig.activateKey) {
       imageActivator.create(scene)
+    } else {
+      imageActivator.checkState(scene)
     }
 
     currentObjects.images.push(imageActivator)
@@ -132,17 +141,22 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
     for (let i = 0; i < repeat; i++) {
       const blockActivator = new ActivateBlock(
         blockConfig.activateKey,
+        blockConfig.activateReverse,
         imageKey,
         cornerX + blockConfig.x + width / 2 + i * width,
         cornerY + blockConfig.y + height / 2,
+        imageDepth++,
         width,
         height,
         blockConfig
       )
 
-      // If there is no activateKey or it is active, then create the block
-      if (!blockConfig.activateKey || gameState.state[blockConfig.activateKey]) {
+      // If there is no activateKey then create the block,
+      // otherwise check the state
+      if (!blockConfig.activateKey) {
         blockActivator.create(scene)
+      } else {
+        blockActivator.checkState(scene)
       }
 
       currentObjects.blocks.push(blockActivator)
@@ -164,17 +178,22 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
 
     const gateActivator = new ActivateGate(
       gateConfig.activateKey,
+      gateConfig.activateReverse,
       imageKey,
       cornerX + gateConfig.x + width / 2,
       cornerY + gateConfig.y + height / 2,
+      imageDepth++,
       width,
       height,
       gateConfig
     )
 
-    // If there is no activateKey or it is active, then create the block
-    if (!gateConfig.activateKey || gameState.state[gateConfig.activateKey]) {
+    // If there is no activateKey then create the gate,
+    // otherwise check the state
+    if (!gateConfig.activateKey) {
       gateActivator.create(scene)
+    } else {
+      gateActivator.checkState(scene)
     }
 
     currentObjects.blocks.push(gateActivator)
@@ -197,5 +216,5 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
     gameObjects.guy.setPosition(cornerX + guyLocation.x, cornerY + guyLocation.y)
   }
 
-  gameObjects.guy.setDepth(1)
+  gameObjects.guy.setDepth(999)
 }

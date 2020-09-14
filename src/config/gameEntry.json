@@ -11,6 +11,7 @@
   ],
   "gates": [
     { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameGH2", "dropArea": "right" },
-    { "x": 951, "y": 0, "width": 8, "height": 540, "toRoom": "gameGH1", "dropArea": "left" }
+    { "x": 951, "y": 0, "width": 8, "height": 540, "toRoom": "gameGH1", "dropArea": "left" },
+    { "x": 420, "y": 410, "width": 8, "height": 30, "toRoom": "gameGHBasement1", "dropArea": "top" }
   ]
 }

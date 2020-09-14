@@ -21,6 +21,6 @@
     { "x": 0, "y": 351, "width": 8, "height": 77, "toRoom": "gameGH1", "dropArea": "right" },
     { "x": 0, "y": 0, "width": 8, "height": 64, "toRoom": "gameGH1", "dropArea": "top-right" },
     { "x": 950, "y": 0, "width": 8, "height": 540, "toRoom": "gameGH2", "dropArea": "left" },
-    { "x": 308, "y": 530, "width": 88, "height": 10, "toRoom": "gameEntry", "dropArea": "main" }
+    { "x": 308, "y": 530, "width": 88, "height": 10, "toRoom": "gameGHBasement1", "dropArea": "top" }
   ]
 }

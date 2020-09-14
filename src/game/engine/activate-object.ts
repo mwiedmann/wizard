@@ -4,14 +4,19 @@ import { collisionCategories, collisionMasks } from './collisions'
 import { IGateLayout, IOnTouch } from './layout'
 
 abstract class ActivateBase {
-  constructor(public activateKey: string | undefined) {}
+  constructor(public activateKey: string | undefined, public activateReverse: boolean | undefined) {}
 
   abstract create(scene: Phaser.Scene): void
   abstract remove(scene: Phaser.Scene): void
 
   checkState(scene: Phaser.Scene): void {
     if (this.activateKey) {
-      if (gameState.state[this.activateKey]) {
+      // activateReverse will create when the key is NOT true in the state
+      // so we check both cases
+      const shouldCreate =
+        (this.activateReverse && !gameState.state[this.activateKey]) ||
+        (!this.activateReverse && gameState.state[this.activateKey])
+      if (shouldCreate) {
         this.create(scene)
       } else {
         this.remove(scene)
@@ -22,11 +27,13 @@ abstract class ActivateBase {
 export class ActivateImage extends ActivateBase {
   constructor(
     activateKey: string | undefined,
+    activateReverse: boolean | undefined,
     public imageKey: string | undefined,
     public x: number,
-    public y: number
+    public y: number,
+    public imageDepth: number
   ) {
-    super(activateKey)
+    super(activateKey, activateReverse)
   }
 
   imageRef?: Phaser.GameObjects.Image
@@ -34,6 +41,8 @@ export class ActivateImage extends ActivateBase {
   create(scene: Phaser.Scene): void {
     if (this.imageKey && !this.imageRef) {
       this.imageRef = scene.add.image(this.x, this.y, this.imageKey)
+      this.imageRef.setDepth(this.imageDepth)
+      console.log('created image', this.imageKey, this.imageDepth)
     }
   }
 
@@ -49,14 +58,16 @@ export class ActivateImage extends ActivateBase {
 export class ActivateBlock extends ActivateImage {
   constructor(
     activateKey: string | undefined,
+    activateReverse: boolean | undefined,
     imageKey: string | undefined,
     x: number,
     y: number,
+    imageDepth: number,
     public width: number,
     public height: number,
     public blockLayout: { onTouch?: IOnTouch; isEmpty?: boolean }
   ) {
-    super(activateKey, imageKey, x, y)
+    super(activateKey, activateReverse, imageKey, x, y, imageDepth)
   }
 
   blockRef?: MatterJS.BodyType
@@ -96,14 +107,16 @@ export class ActivateBlock extends ActivateImage {
 export class ActivateGate extends ActivateBlock {
   constructor(
     activateKey: string | undefined,
+    activateReverse: boolean | undefined,
     imageKey: string | undefined,
     x: number,
     y: number,
+    imageDepth: number,
     width: number,
     height: number,
     public gateLayout: IGateLayout
   ) {
-    super(activateKey, imageKey, x, y, width, height, {})
+    super(activateKey, activateReverse, imageKey, x, y, imageDepth, width, height, {})
   }
 
   create(scene: Phaser.Scene): void {
