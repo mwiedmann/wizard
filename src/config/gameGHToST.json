@@ -1,0 +1,20 @@
+{
+  "size": { "width": 960, "height": 1620 },
+  "images": [
+    { "key": "background", "url": "backgrounds/GHToST-960x1620.png" },
+    { "key": "castle-float-1", "url": "floors/castle-float-256x49.png" }
+  ],
+  "backgrounds": [{ "key": "background" }],
+  "blocks": [
+    { "x": 0, "y": 0, "width": 960, "height": 36 },
+    { "x": 0, "y": 1571, "width": 960, "height": 40 },
+    { "x": 0, "y": 0, "width": 36, "height": 1620 },
+    { "x": 916, "y": 0, "width": 44, "height": 1620 },
+    { "key": "castle-float-1", "x": 650, "y": 150 },
+    { "key": "castle-float-1", "x": 350, "y": 450 },
+    { "key": "castle-float-1", "x": 150, "y": 750 },
+    { "key": "castle-float-1", "x": 450, "y": 1050 },
+    { "key": "castle-float-1", "x": 250, "y": 1350 }
+  ],
+  "dropAreas": [{ "key": "top-right", "x": 900, "y": 40 }]
+}
