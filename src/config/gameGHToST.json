@@ -2,12 +2,18 @@
   "size": { "width": 960, "height": 1620 },
   "images": [
     { "key": "background", "url": "backgrounds/GHToST-960x1620.png" },
-    { "key": "castle-float-1", "url": "floors/castle-float-256x49.png" }
+    { "key": "castle-float-1", "url": "floors/castle-float-256x49.png" },
+    { "key": "rocky-back", "url": "backgrounds/ruins_low1.png" },
+    { "key": "floor-ruins", "url": "backgrounds/floor_ruins.png" }
   ],
-  "backgrounds": [{ "key": "background" }],
+  "backgrounds": [
+    { "key": "background" },
+    { "key": "rocky-back", "y": 1244 },
+    { "key": "floor-ruins", "y": 1310, "depth": 1100 }
+  ],
   "blocks": [
     { "x": 0, "y": 0, "width": 960, "height": 36 },
-    { "x": 0, "y": 1571, "width": 960, "height": 40 },
+    { "x": 0, "y": 1562, "width": 960, "height": 40 },
     { "x": 0, "y": 0, "width": 36, "height": 1620 },
     { "x": 916, "y": 0, "width": 44, "height": 1620 },
     { "key": "castle-float-1", "x": 650, "y": 150 },

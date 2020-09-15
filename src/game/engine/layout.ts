@@ -21,6 +21,7 @@ export interface IBlockLayout {
   repeat?: number
   width?: number
   height?: number
+  depth?: number
 }
 
 export interface IGateLayout {
@@ -33,12 +34,15 @@ export interface IGateLayout {
   height: number
   toRoom: string
   dropArea: string
+  depth?: number
 }
 
 export interface ILayout {
   size?: { x?: number; y?: number; width: number; height: number }
   images?: { global?: boolean; key: string; url: string }[]
-  backgrounds?: [{ key: string; activateKey?: string; activateReverse?: boolean; x?: number; y?: number }]
+  backgrounds?: [
+    { key: string; activateKey?: string; activateReverse?: boolean; x?: number; y?: number; depth?: number }
+  ]
   blocks?: IBlockLayout[]
   gates?: IGateLayout[]
   dropAreas?: [{ key: string; x: number; y: number }]
@@ -110,7 +114,7 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
       backgroundKey,
       backConfig.x ?? settingsHelpers.fieldWidthMid,
       backConfig.y ?? settingsHelpers.fieldHeightMid,
-      imageDepth++
+      backConfig.depth ?? imageDepth++
     )
 
     // If there is no activateKey then create the image,
@@ -145,7 +149,7 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
         imageKey,
         cornerX + blockConfig.x + width / 2 + i * width,
         cornerY + blockConfig.y + height / 2,
-        imageDepth++,
+        blockConfig.depth ?? imageDepth++,
         width,
         height,
         blockConfig
@@ -182,7 +186,7 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
       imageKey,
       cornerX + gateConfig.x + width / 2,
       cornerY + gateConfig.y + height / 2,
-      imageDepth++,
+      gateConfig.depth ?? imageDepth++,
       width,
       height,
       gateConfig
