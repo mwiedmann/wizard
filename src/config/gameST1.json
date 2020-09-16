@@ -1,0 +1,16 @@
+{
+  "size": { "width": 1920, "height": 540 },
+  "images": [
+    { "key": "background", "url": "backgrounds/underground-background.png" },
+    { "key": "floor-ruins", "url": "backgrounds/floor_ruins.png" }
+  ],
+  "backgrounds": [
+    { "key": "background", "x": 480 },
+    { "key": "background", "x": 1440 },
+    { "key": "floor-ruins", "x": 480, "y": 500, "depth": 1100 },
+    { "key": "floor-ruins", "x": 1440, "y": 500, "depth": 1100 }
+  ],
+  "blocks": [{ "x": 0, "y": 482, "width": 1920, "height": 64 }],
+  "dropAreas": [{ "key": "right", "x": 1856, "y": 460 }],
+  "gates": [{ "x": 1910, "y": 240, "width": 8, "height": 300, "toRoom": "gameGHToST", "dropArea": "bottom-left" }]
+}

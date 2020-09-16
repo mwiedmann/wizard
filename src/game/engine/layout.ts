@@ -112,8 +112,8 @@ export const layout = (scene: Phaser.Scene, roomKey: string): void => {
       backConfig.activateKey,
       backConfig.activateReverse,
       backgroundKey,
-      backConfig.x ?? settingsHelpers.fieldWidthMid,
-      backConfig.y ?? settingsHelpers.fieldHeightMid,
+      backConfig.x ? cornerX + backConfig.x : settingsHelpers.fieldWidthMid,
+      backConfig.y ? cornerY + backConfig.y : settingsHelpers.fieldHeightMid,
       backConfig.depth ?? imageDepth++
     )
 

@@ -18,8 +18,7 @@
   ],
   "dropAreas": [
     { "key": "top", "x": 350, "y": 64 },
-    { "key": "topDoor", "x": 160, "y": 150 },
-    { "key": "test", "x": 300, "y": 350 }
+    { "key": "topDoor", "x": 160, "y": 150 }
   ],
   "gates": [
     { "key": "door", "x": 52, "y": 86, "toRoom": "gameGH2", "dropArea": "door" },

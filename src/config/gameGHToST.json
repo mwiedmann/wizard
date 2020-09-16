@@ -8,13 +8,13 @@
   ],
   "backgrounds": [
     { "key": "background" },
-    { "key": "rocky-back", "y": 1244 },
-    { "key": "floor-ruins", "y": 1310, "depth": 1100 }
+    { "key": "rocky-back", "y": 1512 },
+    { "key": "floor-ruins", "y": 1580, "depth": 1100 }
   ],
   "blocks": [
     { "x": 0, "y": 0, "width": 960, "height": 36 },
     { "x": 0, "y": 1562, "width": 960, "height": 40 },
-    { "x": 0, "y": 0, "width": 36, "height": 1620 },
+    { "x": 0, "y": 0, "width": 36, "height": 1300 },
     { "x": 916, "y": 0, "width": 44, "height": 1620 },
     { "key": "castle-float-1", "x": 650, "y": 150 },
     { "key": "castle-float-1", "x": 350, "y": 450 },
@@ -22,5 +22,9 @@
     { "key": "castle-float-1", "x": 450, "y": 1050 },
     { "key": "castle-float-1", "x": 250, "y": 1350 }
   ],
-  "dropAreas": [{ "key": "top-right", "x": 900, "y": 40 }]
+  "dropAreas": [
+    { "key": "top-right", "x": 900, "y": 40 },
+    { "key": "bottom-left", "x": 60, "y": 1540 }
+  ],
+  "gates": [{ "x": 0, "y": 1300, "width": 16, "height": 300, "toRoom": "gameST1", "dropArea": "right" }]
 }
