@@ -1,0 +1,14 @@
+{
+  "size": { "width": 1080, "height": 2880 },
+  "images": [
+    { "key": "background", "url": "backgrounds/underground-background-tall.png" },
+    { "key": "floor-ruins", "url": "backgrounds/floor_ruins.png" }
+  ],
+  "backgrounds": [
+    { "key": "background" },
+    { "key": "floor-ruins", "x": 100, "y": 2840, "depth": 1100 },
+    { "key": "floor-ruins", "x": 900, "y": 2840, "depth": 1100 }
+  ],
+  "blocks": [{ "x": 0, "y": 2822, "width": 1080, "height": 64 }],
+  "dropAreas": [{ "key": "top-right", "x": 960, "y": 80 }]
+}

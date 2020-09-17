@@ -12,5 +12,8 @@
   ],
   "blocks": [{ "x": 0, "y": 482, "width": 1920, "height": 64 }],
   "dropAreas": [{ "key": "right", "x": 1856, "y": 460 }],
-  "gates": [{ "x": 1910, "y": 240, "width": 8, "height": 300, "toRoom": "gameGHToST", "dropArea": "bottom-left" }]
+  "gates": [
+    { "x": 1910, "y": 240, "width": 8, "height": 300, "toRoom": "gameGHToST", "dropArea": "bottom-left" },
+    { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameST2", "dropArea": "top-right" }
+  ]
 }
