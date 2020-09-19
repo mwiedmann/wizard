@@ -2,13 +2,50 @@
   "size": { "width": 1080, "height": 2880 },
   "images": [
     { "key": "background", "url": "backgrounds/underground-background-tall.png" },
-    { "key": "floor-ruins", "url": "backgrounds/floor_ruins.png" }
+    { "key": "floor-ruins", "url": "backgrounds/floor_ruins.png" },
+    { "key": "plat1", "url": "floors/dungeon-plat1-188x38.png" },
+    { "key": "plat2", "url": "floors/dungeon-plat2-174x38.png" },
+    { "key": "plat3", "url": "floors/dungeon-plat3-238x103.png" },
+    { "key": "plat4", "url": "floors/dungeon-plat4-52x106.png" },
+    { "key": "plat-ptleft", "url": "floors/dungeon-plat5-ptleft-183x230.png" },
+    { "key": "plat-ptright", "url": "floors/dungeon-plat5-ptright-183x230.png" },
+    { "key": "door", "url": "gates/dungeon-door-open.png" }
   ],
   "backgrounds": [
     { "key": "background" },
     { "key": "floor-ruins", "x": 100, "y": 2840, "depth": 1100 },
-    { "key": "floor-ruins", "x": 900, "y": 2840, "depth": 1100 }
+    { "key": "floor-ruins", "x": 900, "y": 2840, "depth": 1100 },
+    { "key": "plat-ptleft", "x": 989, "y": 267 },
+    { "key": "plat-ptleft", "x": 989, "y": 1015 },
+    { "key": "plat-ptright", "x": 91, "y": 1015 }
   ],
-  "blocks": [{ "x": 0, "y": 2822, "width": 1080, "height": 64 }],
-  "dropAreas": [{ "key": "top-right", "x": 960, "y": 80 }]
+  "blocks": [
+    { "x": 0, "y": 2822, "width": 1080, "height": 64 },
+
+    { "x": 0, "y": 900, "width": 45, "height": 230 },
+    { "x": 0, "y": 968, "width": 170, "height": 16 },
+
+    { "x": 1035, "y": 900, "width": 50, "height": 230 },
+    { "x": 912, "y": 968, "width": 150, "height": 16 },
+
+    { "x": 1035, "y": 152, "width": 50, "height": 230 },
+    { "x": 912, "y": 220, "width": 150, "height": 16 },
+    { "key": "plat1", "x": 450, "y": 400 },
+    { "key": "plat1", "x": 750, "y": 700 },
+    { "key": "plat1", "x": 600, "y": 1200 },
+    { "key": "plat1", "x": 400, "y": 1500 },
+    { "key": "plat1", "x": 75, "y": 1800 },
+    { "key": "plat1", "x": 300, "y": 2100 },
+    { "key": "plat1", "x": 100, "y": 2400 },
+    { "key": "plat1", "x": 800, "y": 2600 }
+  ],
+  "dropAreas": [{ "key": "top-right", "x": 1040, "y": 120 }],
+  "gates": [
+    { "x": 1072, "y": 0, "width": 8, "height": 150, "toRoom": "gameST1", "dropArea": "left" },
+    { "x": 0, "y": 840, "width": 8, "height": 60, "toRoom": "gameST1", "dropArea": "left" },
+    { "x": 1072, "y": 840, "width": 8, "height": 60, "toRoom": "gameST1", "dropArea": "left" },
+    { "x": 0, "y": 2762, "width": 8, "height": 60, "toRoom": "gameST1", "dropArea": "left" },
+    { "x": 1072, "y": 2762, "width": 8, "height": 60, "toRoom": "gameST1", "dropArea": "left" },
+    { "key": "door", "x": 830, "y": 2463, "toRoom": "gameST1", "dropArea": "left" }
+  ]
 }
