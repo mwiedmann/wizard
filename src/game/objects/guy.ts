@@ -1,4 +1,5 @@
 import { collisionCategories, collisionMasks } from '../engine/collisions'
+import { gameState } from '../scene-update'
 
 export class Guy extends Phaser.Physics.Matter.Sprite {
   constructor(world: Phaser.Physics.Matter.World, x: number, y: number, texture: string, frame: string | integer) {
@@ -16,5 +17,9 @@ export class Guy extends Phaser.Physics.Matter.Sprite {
   jumpForce(): number {
     // Guy will be able to get jump upgrades later
     return -2.75
+  }
+
+  canShoot(): boolean {
+    return !!gameState.state['wand']
   }
 }

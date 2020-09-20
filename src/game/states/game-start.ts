@@ -20,8 +20,24 @@ const gameStartInit = (scene: Phaser.Scene): void => {
   })
 
   scene.anims.create({
+    key: 'guy-run-nowand',
+    frames: scene.anims.generateFrameNumbers('guy-run-nowand', {}),
+    frameRate: 12,
+    repeat: -1,
+    // yoyo: true,
+  })
+
+  scene.anims.create({
     key: 'guy-jump',
     frames: scene.anims.generateFrameNumbers('guy-jump', {}),
+    frameRate: 12,
+    repeat: -1,
+    // yoyo: true,
+  })
+
+  scene.anims.create({
+    key: 'guy-jump-nowand',
+    frames: scene.anims.generateFrameNumbers('guy-jump-nowand', {}),
     frameRate: 12,
     repeat: -1,
     // yoyo: true,

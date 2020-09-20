@@ -4,7 +4,8 @@
     { "key": "background", "url": "backgrounds/great-hall-1.png" },
     { "key": "castle-float-1", "url": "floors/castle-float-256x49.png" },
     { "key": "small-float", "url": "floors/castle-platform-49x55.png" },
-    { "key": "pressure", "url": "floors/castle-pressure-plate-red-47x8.png" }
+    { "key": "pressure", "url": "floors/castle-pressure-plate-red-47x8.png" },
+    { "key": "door", "url": "gates/castle-open-door-77x83.png" }
   ],
   "backgrounds": [
     { "key": "background", "x": 480 },
@@ -22,11 +23,13 @@
   ],
   "dropAreas": [
     { "key": "left", "x": 64, "y": 400 },
+    { "key": "left-door", "x": 140, "y": 120 },
     { "key": "right", "x": 1856, "y": 400 },
     { "key": "top-right", "x": 1856, "y": 100 }
   ],
   "gates": [
     { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameEntry", "dropArea": "right" },
+    { "key": "door", "x": 10, "y": 67, "toRoom": "gameWand", "dropArea": "door" },
     { "x": 1910, "y": 240, "width": 8, "height": 300, "toRoom": "gameGHPit", "dropArea": "left" },
     { "x": 1910, "y": 0, "width": 8, "height": 230, "toRoom": "gameGHPit", "dropArea": "top-left" }
   ]

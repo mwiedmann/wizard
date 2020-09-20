@@ -12,6 +12,6 @@
   "gates": [
     { "x": 0, "y": 0, "width": 8, "height": 540, "toRoom": "gameGH2", "dropArea": "right" },
     { "x": 951, "y": 0, "width": 8, "height": 540, "toRoom": "gameGH1", "dropArea": "left" },
-    { "x": 350, "y": 380, "width": 8, "height": 100, "toRoom": "gameST2", "dropArea": "top-right" }
+    { "x": 350, "y": 380, "width": 8, "height": 100, "toRoom": "gameGH1", "dropArea": "left-door" }
   ]
 }

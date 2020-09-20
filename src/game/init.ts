@@ -14,7 +14,9 @@ function scenePreload(this: Phaser.Scene) {
 
   // Sprites
   this.load.spritesheet('guy-run', 'images/guy-run-55x59.png', { frameWidth: 55, frameHeight: 59 })
+  this.load.spritesheet('guy-run-nowand', 'images/guy-run-nowand-55x59.png', { frameWidth: 55, frameHeight: 59 })
   this.load.spritesheet('guy-jump', 'images/guy-jump-64x64.png', { frameWidth: 64 })
+  this.load.spritesheet('guy-jump-nowand', 'images/guy-jump-nowand-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('guy-shoot', 'images/guy-shoot-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('guy-yawn', 'images/guy-yawn-64x64.png', { frameWidth: 64 })
   this.load.spritesheet('ghost', 'images/monsters/ghost-64x64.png', { frameWidth: 64 })

@@ -1,10 +1,10 @@
 import { gameObjects } from '../game-objects'
-import { gameState } from '../scene-update'
+import { gameState, KnownGameStateKeys } from '../scene-update'
 import { collisionCategories, collisionMasks } from './collisions'
 import { IGateLayout, IOnTouch } from './layout'
 
 abstract class ActivateBase {
-  constructor(public activateKey: string | undefined, public activateReverse: boolean | undefined) {}
+  constructor(public activateKey: KnownGameStateKeys | undefined, public activateReverse: boolean | undefined) {}
 
   abstract create(scene: Phaser.Scene): void
   abstract remove(scene: Phaser.Scene): void
@@ -26,7 +26,7 @@ abstract class ActivateBase {
 }
 export class ActivateImage extends ActivateBase {
   constructor(
-    activateKey: string | undefined,
+    activateKey: KnownGameStateKeys | undefined,
     activateReverse: boolean | undefined,
     public imageKey: string | undefined,
     public x: number,
@@ -57,7 +57,7 @@ export class ActivateImage extends ActivateBase {
 
 export class ActivateBlock extends ActivateImage {
   constructor(
-    activateKey: string | undefined,
+    activateKey: KnownGameStateKeys | undefined,
     activateReverse: boolean | undefined,
     imageKey: string | undefined,
     x: number,
@@ -106,7 +106,7 @@ export class ActivateBlock extends ActivateImage {
 
 export class ActivateGate extends ActivateBlock {
   constructor(
-    activateKey: string | undefined,
+    activateKey: KnownGameStateKeys | undefined,
     activateReverse: boolean | undefined,
     imageKey: string | undefined,
     x: number,

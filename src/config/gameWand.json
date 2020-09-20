@@ -1,0 +1,18 @@
+{
+  "size": { "width": 960, "height": 540 },
+  "images": [
+    { "key": "background", "url": "backgrounds/empty-castle-room.png" },
+    { "key": "door", "url": "gates/castle-open-door-77x83.png" },
+    { "key": "small-float", "url": "floors/castle-platform-49x55.png" },
+    { "key": "wand", "url": "wand.png" },
+    { "key": "item-back", "url": "item-back-64x64.png" }
+  ],
+  "backgrounds": [{ "key": "background" }, { "key": "item-back", "x": 480, "y": 340 }],
+  "blocks": [
+    { "x": 0, "y": 426, "width": 960, "height": 64 },
+    { "key": "small-float", "x": 455, "y": 371 },
+    { "key": "wand", "activateKey": "wand", "activateReverse": true, "onTouch": { "key": "wand" }, "x": 470, "y": 327 }
+  ],
+  "dropAreas": [{ "key": "door", "x": 840, "y": 400 }],
+  "gates": [{ "key": "door", "x": 880, "y": 343, "toRoom": "gameGH1", "dropArea": "left-door" }]
+}

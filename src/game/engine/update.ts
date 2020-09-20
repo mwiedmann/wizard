@@ -45,7 +45,7 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
     lastActionTime = time
   }
 
-  if (controls.spell.isDown && time > playerNextSpellTime) {
+  if (guy.canShoot() && controls.spell.isDown && time > playerNextSpellTime) {
     shooting = true
     lastActionTime = time
     const direction = guy.flipX ? -1 : 1
@@ -77,14 +77,14 @@ export const update = (scene: Phaser.Scene, time: number, delta: number): void =
       shootTimeStart = time
       guy.anims.play('guy-shoot', true)
     } else if (!guy.touchingFloor) {
-      guy.anims.play('guy-jump', true)
+      guy.anims.play(guy.canShoot() ? 'guy-jump' : 'guy-jump-nowand', true)
     } else {
-      // If use hasn't acted in some time, play the waiting animation
+      // If user hasn't acted in some time, play the waiting animation
       if (lastActionTime + 5000 < time) {
         yawning = true
         guy.anims.play('guy-yawn', true)
       } else {
-        guy.anims.play('guy-run', true)
+        guy.anims.play(guy.canShoot() ? 'guy-run' : 'guy-run-nowand', true)
       }
     }
 

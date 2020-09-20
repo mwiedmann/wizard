@@ -6,11 +6,13 @@ import { gameStartPreload } from './states/game-start'
 import { initPreload } from './states/init'
 import { titleCleanup, titlePreload, titleUpdate } from './states/title'
 
+export type KnownGameStateKeys = 'wand'
+
 export const gameState: {
   phase: string
   nextStateTransitionTime: number
   dropArea: string
-  state: { [key: string]: boolean }
+  state: { [K in KnownGameStateKeys]?: boolean }
   stateChanged: boolean
 } = {
   phase: 'init',

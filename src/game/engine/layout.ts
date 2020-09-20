@@ -1,18 +1,18 @@
 import { gameSettings, settingsHelpers } from '../consts'
 import { gameObjects } from '../game-objects'
-import { gameState } from '../scene-update'
+import { gameState, KnownGameStateKeys } from '../scene-update'
 import { ActivateBlock, ActivateGate, ActivateImage } from './activate-object'
 import { currentObjects } from './current-objects'
 import { monsterFactory } from './monster-factory'
 
 export interface IOnTouch {
-  key: string
+  key: KnownGameStateKeys
   isToggle?: boolean
 }
 
 export interface IBlockLayout {
   key?: string
-  activateKey?: string
+  activateKey?: KnownGameStateKeys
   activateReverse?: boolean
   onTouch?: IOnTouch
   isEmpty?: boolean
@@ -26,7 +26,7 @@ export interface IBlockLayout {
 
 export interface IGateLayout {
   key?: string
-  activateKey?: string
+  activateKey?: KnownGameStateKeys
   activateReverse?: boolean
   x: number
   y: number
@@ -41,7 +41,7 @@ export interface ILayout {
   size?: { x?: number; y?: number; width: number; height: number }
   images?: { global?: boolean; key: string; url: string }[]
   backgrounds?: [
-    { key: string; activateKey?: string; activateReverse?: boolean; x?: number; y?: number; depth?: number }
+    { key: string; activateKey?: KnownGameStateKeys; activateReverse?: boolean; x?: number; y?: number; depth?: number }
   ]
   blocks?: IBlockLayout[]
   gates?: IGateLayout[]
